@@ -18,18 +18,30 @@ let quotes = [
       filteredQuotes = quotes.filter(q => q.category.toLowerCase() === selectedCategory.toLowerCase());
     }
   
+    // Clear previous display
+    quoteDisplay.innerHTML = "";
+  
     if (filteredQuotes.length === 0) {
-      quoteDisplay.innerHTML = "<em>No quotes available for this category.</em>";
+      const noQuoteMsg = document.createElement("em");
+      noQuoteMsg.textContent = "No quotes available for this category.";
+      quoteDisplay.appendChild(noQuoteMsg);
       return;
     }
   
     const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
     const quote = filteredQuotes[randomIndex];
-    
-    quoteDisplay.innerHTML = `
-      <p>"${quote.text}"</p>
-      <small>— ${quote.category}</small>
-    `;
+  
+    // Create quote paragraph
+    const quoteTextEl = document.createElement("p");
+    quoteTextEl.textContent = `"${quote.text}"`;
+  
+    // Create category element
+    const quoteCatEl = document.createElement("small");
+    quoteCatEl.textContent = `— ${quote.category}`;
+  
+    // Append to display
+    quoteDisplay.appendChild(quoteTextEl);
+    quoteDisplay.appendChild(quoteCatEl);
   }
   
   // Function: Add new quote
@@ -44,10 +56,13 @@ let quotes = [
   
     quotes.push({ text, category });
   
-    // Update category dropdown if new category
+    // Add category to dropdown if it's new
     const existingCategories = Array.from(categoryFilter.options).map(opt => opt.value.toLowerCase());
     if (!existingCategories.includes(category.toLowerCase())) {
-      categoryFilter.innerHTML += `<option value="${category}">${category}</option>`;
+      const newOption = document.createElement("option");
+      newOption.value = category;
+      newOption.textContent = category;
+      categoryFilter.appendChild(newOption);
     }
   
     document.getElementById("newQuoteText").value = "";
@@ -58,22 +73,43 @@ let quotes = [
   
   // Function: Dynamically create the add-quote form
   function createAddQuoteForm() {
-    formContainer.innerHTML = `
-      <h2>Add Your Own Quote</h2>
-      <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-      <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-      <button id="addQuoteBtn">Add Quote</button>
-    `;
+    // Title
+    const title = document.createElement("h2");
+    title.textContent = "Add Your Own Quote";
+    formContainer.appendChild(title);
   
-    // Attach event listener to the new button
-    document.getElementById("addQuoteBtn").addEventListener("click", addQuote);
+    // Quote input
+    const quoteInput = document.createElement("input");
+    quoteInput.id = "newQuoteText";
+    quoteInput.type = "text";
+    quoteInput.placeholder = "Enter a new quote";
+    formContainer.appendChild(quoteInput);
+  
+    // Category input
+    const categoryInput = document.createElement("input");
+    categoryInput.id = "newQuoteCategory";
+    categoryInput.type = "text";
+    categoryInput.placeholder = "Enter quote category";
+    formContainer.appendChild(categoryInput);
+  
+    // Add button
+    const addBtn = document.createElement("button");
+    addBtn.id = "addQuoteBtn";
+    addBtn.textContent = "Add Quote";
+    formContainer.appendChild(addBtn);
+  
+    // Attach listener
+    addBtn.addEventListener("click", addQuote);
   }
   
   // Function: Populate category dropdown
   function populateCategories() {
     const categories = [...new Set(quotes.map(q => q.category))];
     categories.forEach(category => {
-      categoryFilter.innerHTML += `<option value="${category}">${category}</option>`;
+      const option = document.createElement("option");
+      option.value = category;
+      option.textContent = category;
+      categoryFilter.appendChild(option);
     });
   }
   
