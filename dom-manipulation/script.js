@@ -16,7 +16,7 @@ let quotes = [
   // Display a random quote
   function showRandomQuote() {
     let filteredQuotes = quotes;
-    
+  
     // Apply category filter
     const selectedCategory = categoryFilter.value;
     if (selectedCategory !== "all") {
@@ -24,13 +24,18 @@ let quotes = [
     }
   
     if (filteredQuotes.length === 0) {
-      quoteDisplay.textContent = "No quotes available for this category.";
+      quoteDisplay.innerHTML = "<em>No quotes available for this category.</em>";
       return;
     }
   
     const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
     const quote = filteredQuotes[randomIndex];
-    quoteDisplay.textContent = `"${quote.text}" — ${quote.category}`;
+  
+    // Use innerHTML for formatted output
+    quoteDisplay.innerHTML = `
+      <p>"${quote.text}"</p>
+      <small>— ${quote.category}</small>
+    `;
   }
   
   // Add new quote
@@ -46,13 +51,10 @@ let quotes = [
     // Add to array
     quotes.push({ text, category });
   
-    // Add category to filter if not already present
+    // Add category to filter if new
     const existingCategories = Array.from(categoryFilter.options).map(opt => opt.value.toLowerCase());
     if (!existingCategories.includes(category.toLowerCase())) {
-      const newOption = document.createElement("option");
-      newOption.value = category;
-      newOption.textContent = category;
-      categoryFilter.appendChild(newOption);
+      categoryFilter.innerHTML += `<option value="${category}">${category}</option>`;
     }
   
     // Clear inputs
@@ -62,14 +64,11 @@ let quotes = [
     alert("Quote added successfully!");
   }
   
-  // Initialize category dropdown with unique categories
+  // Populate categories at start
   function populateCategories() {
     const categories = [...new Set(quotes.map(q => q.category))];
     categories.forEach(category => {
-      const option = document.createElement("option");
-      option.value = category;
-      option.textContent = category;
-      categoryFilter.appendChild(option);
+      categoryFilter.innerHTML += `<option value="${category}">${category}</option>`;
     });
   }
   
