@@ -4,32 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dynamic Quote Generator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    #quoteDisplay {
-      margin: 20px auto;
-      padding: 15px;
-      border: 2px solid #333;
-      border-radius: 8px;
-      width: 60%;
-      font-size: 1.2em;
-      min-height: 50px;
-    }
-    input {
-      padding: 8px;
-      margin: 5px;
-      width: 200px;
-    }
-    button {
-      padding: 8px 12px;
-      margin: 5px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
@@ -38,10 +13,8 @@
   
   <button id="newQuote">Show New Quote</button>
 
-  <h2>Add Your Own Quote</h2>
-  <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-  <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-  <button id="addQuoteBtn">Add Quote</button>
+  <!-- Placeholder for the dynamic form -->
+  <div id="formContainer"></div>
 
   <h3>Filter by Category</h3>
   <select id="categoryFilter">
