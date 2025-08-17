@@ -59,7 +59,7 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   }
   
   // ============================
-  // Server Sync (GET + POST)
+  // Server Interaction (GET + POST)
   // ============================
   async function fetchQuotesFromServer() {
     try {
@@ -86,7 +86,10 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
     }
   }
   
-  async function syncWithServer() {
+  // ============================
+  // Sync with Server (Required Name: syncQuotes)
+  // ============================
+  async function syncQuotes() {
     const serverQuotes = await fetchQuotesFromServer();
     const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
     const newQuotes = localQuotes.filter(lq => !serverQuotes.some(sq => sq.text === lq.text));
@@ -107,6 +110,6 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   populateCategories();
   showRandomQuote();
   
-  // كل دقيقة مزامنة مع السيرفر
-  setInterval(syncWithServer, 60000);
+  // مزامنة تلقائية كل دقيقة
+  setInterval(syncQuotes, 60000);
   
