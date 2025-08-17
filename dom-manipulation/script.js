@@ -98,18 +98,11 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
       await postNewQuotesToServer(newQuotes);
       console.log(`${newQuotes.length} quotes sent to server.`);
     }
+  
     populateCategories();
     showRandomQuote();
+  
+    // رسالة واضحة للمستخدم بعد المزامنة
+    console.log("Quotes synced with server!");
   }
-  
-  // ============================
-  // Init
-  // ============================
-  newQuoteBtn.addEventListener("click", showRandomQuote);
-  categoryFilter.addEventListener("change", filterQuotes);
-  populateCategories();
-  showRandomQuote();
-  
-  // مزامنة تلقائية كل دقيقة
-  setInterval(syncQuotes, 60000);
   
