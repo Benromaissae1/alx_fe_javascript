@@ -9,21 +9,24 @@
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-
+  <!-- اختيار الفئة -->
   <label for="categoryFilter">Choose Category:</label>
   <select id="categoryFilter">
     <option value="all">All</option>
   </select>
 
-
+  <!-- منطقة عرض الاقتباس -->
   <div id="quoteDisplay" class="quote-box"></div>
   <button id="newQuote">Show New Quote</button>
 
-
+  <!-- نموذج إضافة اقتباس جديد -->
   <div id="formContainer" class="form-section"></div>
 
-  
-  <div id="controlsContainer" class="controls"></div>
+  <!-- أدوات الاستيراد والتصدير -->
+  <div id="controlsContainer" class="controls">
+    <button id="exportBtn">Export Quotes (JSON)</button>
+    <input type="file" id="importFile" accept=".json">
+  </div>
 
   <script src="script.js"></script>
 </body>
