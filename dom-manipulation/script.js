@@ -3,7 +3,6 @@
 // With Local Storage + Filtering + JSON Import/Export + Sync Simulation
 // ============================
 
-// Quotes array
 let quotes = JSON.parse(localStorage.getItem("quotes")) || [
     { text: "The best way to get started is to quit talking and begin doing.", category: "Motivation" },
     { text: "Life is what happens when you're busy making other plans.", category: "Life" }
@@ -117,7 +116,7 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   // ============================
   // Sync with Server (Simulation)
   // ============================
-  function fetchServerQuotes() {
+  function fetchQuotesFromServer() {
     return new Promise(resolve => {
       const mockServerQuotes = [
         { text: "Server quote 1", category: "Motivation" },
@@ -128,7 +127,7 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   }
   
   function syncWithServer() {
-    fetchServerQuotes().then(serverQuotes => {
+    fetchQuotesFromServer().then(serverQuotes => {
       const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
       let newQuotes = [];
   
@@ -175,6 +174,6 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   populateCategories();
   showRandomQuote();
   
-
+  // مزامنة كل دقيقة
   setInterval(syncWithServer, 60000);
   
