@@ -1,6 +1,6 @@
 // ============================
 // Dynamic Quote Generator
-// With Local Storage + Filtering + JSON Import/Export + Sync Simulation
+// With Local Storage + Filtering + JSON Import/Export + Server Sync
 // ============================
 
 let quotes = JSON.parse(localStorage.getItem("quotes")) || [
@@ -114,39 +114,44 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   }
   
   // ============================
-  // Sync with Server (Simulation)
+  // Sync with Server (Simulation using JSONPlaceholder)
   // ============================
-  function fetchQuotesFromServer() {
-    return new Promise(resolve => {
-      const mockServerQuotes = [
-        { text: "Server quote 1", category: "Motivation" },
-        { text: "Server quote 2", category: "Life" }
-      ];
-      setTimeout(() => resolve(mockServerQuotes), 1000);
-    });
+  async function fetchQuotesFromServer() {
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+      const data = await response.json();
+  
+      // تحويل بيانات السيرفر إلى صيغة Quotes
+      return data.slice(0, 5).map(post => ({
+        text: post.title,
+        category: "Server"
+      }));
+    } catch (error) {
+      console.error("Error fetching from server:", error);
+      return [];
+    }
   }
   
-  function syncWithServer() {
-    fetchQuotesFromServer().then(serverQuotes => {
-      const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
-      let newQuotes = [];
+  async function syncWithServer() {
+    const serverQuotes = await fetchQuotesFromServer();
+    const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+    let newQuotes = [];
   
-      serverQuotes.forEach(serverQuote => {
-        const existsLocally = localQuotes.some(
-          localQuote => localQuote.text === serverQuote.text && localQuote.category === serverQuote.category
-        );
-        if (!existsLocally) {
-          newQuotes.push(serverQuote);
-        }
-      });
-  
-      if (newQuotes.length > 0) {
-        quotes.push(...newQuotes);
-        saveQuotes();
-        populateCategories();
-        notifyUser(`${newQuotes.length} new quotes synced from server.`);
+    serverQuotes.forEach(serverQuote => {
+      const existsLocally = localQuotes.some(
+        localQuote => localQuote.text === serverQuote.text && localQuote.category === serverQuote.category
+      );
+      if (!existsLocally) {
+        newQuotes.push(serverQuote);
       }
     });
+  
+    if (newQuotes.length > 0) {
+      quotes.push(...newQuotes);
+      saveQuotes();
+      populateCategories();
+      notifyUser(`${newQuotes.length} new quotes synced from server.`);
+    }
   }
   
   function notifyUser(message) {
