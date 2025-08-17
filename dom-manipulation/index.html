@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Quote Generator</title>
+  <title>Dynamic Quote Generator with Filtering</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,18 +11,21 @@
 
   <!-- اختيار الفئة -->
   <label for="categoryFilter">Choose Category:</label>
-  <select id="categoryFilter">
-    <option value="all">All</option>
-  </select>
+  <select id="categoryFilter"></select>
 
-  <!-- منطقة عرض الاقتباس -->
+  <!-- عرض الاقتباسات -->
   <div id="quoteDisplay" class="quote-box"></div>
   <button id="newQuote">Show New Quote</button>
 
-  <!-- نموذج إضافة اقتباس جديد -->
-  <div id="formContainer" class="form-section"></div>
+  <!-- إضافة اقتباس -->
+  <div id="formContainer" class="form-section">
+    <h2>Add Your Own Quote</h2>
+    <input id="newQuoteText" type="text" placeholder="Enter a new quote">
+    <input id="newQuoteCategory" type="text" placeholder="Enter quote category">
+    <button id="addQuoteBtn">Add Quote</button>
+  </div>
 
-  <!-- أدوات الاستيراد والتصدير -->
+  <!-- استيراد وتصدير -->
   <div id="controlsContainer" class="controls">
     <button id="exportBtn">Export Quotes (JSON)</button>
     <input type="file" id="importFile" accept=".json">
