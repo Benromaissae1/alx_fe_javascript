@@ -100,15 +100,14 @@ async function syncQuotes() {
   }
   populateCategories();
   showRandomQuote();
+  console.log("Quotes synced with server!");
 }
 
-// ============================
-// Init
-// ============================
+
 newQuoteBtn.addEventListener("click", showRandomQuote);
 categoryFilter.addEventListener("change", filterQuotes);
 populateCategories();
 showRandomQuote();
 
-// مزامنة تلقائية كل دقيقة
+
 setInterval(syncQuotes, 60000);
